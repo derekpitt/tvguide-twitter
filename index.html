@@ -1,0 +1,337 @@
+<html>
+
+<head>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="all" /> 
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script> 
+  <script type="text/javascript" src="js/guide.js"></script>
+
+<script type="text/javascript">
+$(function() {
+  var getCurrentRequests = function() {
+    var url = "http://api.twitter.com/1/account/rate_limit_status.json?callback=?";
+    $.getJSON(url, function(data) {
+      //console.log(data.remaining_hits);
+    });
+  };
+  
+  var parse_date = function (date_str) {
+    // The non-search twitter APIs return inconsistently-formatted dates, which Date.parse
+    // cannot handle in IE. We therefore perform the following transformation:
+    // "Wed Apr 29 08:53:31 +0000 2009" => "Wed, Apr 29 2009 08:53:31 +0000"
+    return Date.parse(date_str.replace(/^([a-z]{3})( [a-z]{3} \d\d?)(.*)( \d{4})$/i, '$1,$2$4$3'));
+  };
+
+
+
+  var relativeTime = function (time_value) {
+    var parsed_date = parse_date(time_value);
+    var relative_to = (arguments.length > 1) ? arguments[1] : new Date();
+    var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
+    var pluralize = function (singular, n) {
+      return '' + n + ' ' + singular + (n == 1 ? '' : 's');
+    };
+    if(delta < 60) {
+      return 'less than a minute ago';
+    } else if(delta < (60*60)) {
+      return 'about ' + pluralize("minute", parseInt(delta / 60)) + ' ago';
+    } else if(delta < (24*60*60)) {
+      return 'about ' + pluralize("hour", parseInt(delta / 3600)) + ' ago';
+    } else {
+      return 'about ' + pluralize("day", parseInt(delta / 86400)) + ' ago';
+    }
+  };
+
+
+  $(".channel[data-twitter-name]").each(function() {
+    var twitterUserName = $(this).attr("data-twitter-name");
+    var that = this;
+
+    var getTimeLine = function(username) {
+      var url = 'http://api.twitter.com/1/statuses/user_timeline.json?screen_name=' + username + '&count=25&callback=?';
+      $.getJSON(url, function(data) {
+        var tweets = (data.results || data);
+        // lets load up the user name
+        var twitterName = tweets[0].user.name;
+        var location = tweets[0].user.location;
+        var image = tweets[0].user.profile_image_url;
+        $(that).find(".real_name").html(twitterName);
+        $(that).find(".location").html(location);
+        $(that).find(".username").html('@' + username);
+        $(that).find(".image").attr('src', image);
+
+
+        $.each(tweets, function(i, item) {
+          $(that).find("ul").append("<li><p class='tweet'>" + item.text + "</p><p class='ago'>" + relativeTime(item.created_at) + "</p></li>");
+          //console.log(item);
+        });
+      });
+    };
+
+    getTimeLine(twitterUserName);
+    getCurrentRequests();
+
+    
+
+  });
+});
+</script>
+
+</head>
+
+
+<body>
+
+<h1>Twitter in TV Guide Format</h1>
+
+<div class="guide">
+  <div class="channel" data-twitter-name="derekpittsinger">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="d_imi">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="tacocloud">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="dhh">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="mashable">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="CNN">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="jasonfried">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="charliesheen">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="mcuban">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="TechCrunch">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="github">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="google">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="UntrueTweets">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="dogfishbeer">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="BreakingNews">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="rjs">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="kevinrose">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="ConanOBrien">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+
+  <div class="channel" data-twitter-name="feedgrids">
+    <div class="name">
+      <img class="image" src="" />
+      <p class="real_name"></p>
+      <p class="location"></p>
+      <p class="username"></p>
+    </div>
+    <div class="contents">
+      <ul>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+  

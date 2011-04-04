@@ -1,0 +1,79 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+
+	padding: 30px;
+}
+
+h1 {
+	font-weight: 200;
+	margin-bottom: 30px;
+}
+
+
+.guide {
+	width: 100%;
+	overflow: hidden;
+}
+
+
+.guide .channel {
+	margin-bottom: 5px;
+	opacity: 0.5;
+}
+
+
+
+.guide .channel .name {
+	width: 200px;
+	float: left;
+	padding: 10px;
+	background-color: #fdf6e3;
+	height: 47px;
+}
+
+.guide .channel .contents {
+	overflow: hidden;	
+	width: 80%;
+}
+
+.guide .channel .contents ul {
+	list-style: none;
+	width: 99999px;
+	float: left;
+}
+.guide .channel .contents ul li {
+	float: left;
+	height: 47px;
+	padding: 10px;
+	background-color: #eee8d5;
+	max-width: 550px;
+	margin-right: 5px;
+}
+
+.real_name {
+}
+.location, .username {
+	font-size: 0.6em;
+}
+.image {
+	float: left;
+	margin-right: 10px;
+	width: 48px;
+	height: 48px;
+}
+
+.tweet {
+	font-size: 0.9em;
+	color: #073642;
+}
+
+.ago {
+	font-size: 0.5em;
+	text-align: right;
+	color: #b58900;
+}
